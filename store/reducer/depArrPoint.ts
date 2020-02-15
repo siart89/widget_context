@@ -1,4 +1,4 @@
-export type PointAction = {type: 'set_dep', paylaod: string} | {type: 'set_arr', payload: string};
+export type PointAction = {type: 'set_dep', payload: string} | {type: 'set_arr', payload: string};
 
 export type DepArrState = {
     dep_city: string,
@@ -10,7 +10,7 @@ const depArrPointReducer = (state: DepArrState, action: PointAction) : DepArrSta
         case 'set_dep':
             return {
                 ...state,
-                dep_city: action.paylaod 
+                dep_city: action.payload 
             };
         case 'set_arr':
             return {

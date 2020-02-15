@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 import { Action } from './reducer/persons';
 import { TransportAction } from './reducer/transports';
+import { DepArrState, PointAction } from './reducer/depArrPoint';
 
 type InitState = {
     persons: string
@@ -9,7 +10,7 @@ type InitState = {
         dep_city: string,
         arr_city: string
     }, 
-    setPoints: any,
+    setPoints:({}: PointAction) => any,
     transportType: String[],
     setTransportType: ({}: TransportAction) => any
 }
