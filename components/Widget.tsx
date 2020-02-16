@@ -14,10 +14,10 @@ const Widjet: React.FC<Props> = (props) => {
 
     const personsW = props.isPersons && <PersonsBtn />
     const transportWBus = props.bus && <TransportBtn
-        type="bus"
+        type='bus'
     />
     const transportWBahn = props.bahn && <TransportBtn
-        type="bahn"
+        type='bahn'
     />
     const pointsW = props.isPoints && <PointInputs />
     

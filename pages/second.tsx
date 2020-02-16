@@ -24,6 +24,7 @@ const Second = (props) => {
                 Im a second page
                 <Widjet
                     isPoints
+                    bahn
                 />
                 <Results />
             </div>

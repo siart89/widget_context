@@ -3,7 +3,7 @@ import WidgetContext from '../store/WidjetContext';
 import { TransportAction } from '../store/reducer/transports';
 
 type Props = {
-    type: string
+    type: 'bus' | 'bahn'
 }
 
 const TransportBtn: React.FC<Props> = (props) => {
