@@ -4,17 +4,17 @@ import { TransportAction } from './reducer/transports';
 import { DepArrState, PointAction } from './reducer/depArrPoint';
 
 type InitState = {
-    persons: string
-    setPersons: any,
-    points: {
+    persons?: string
+    setPersons?: ({}: Action) => void,
+    points?: {
         dep_city: string,
         arr_city: string
     }, 
-    setPoints:({}: PointAction) => any,
-    transportType: String[],
-    setTransportType: ({}: TransportAction) => any
+    setPoints?:({}: PointAction) => void,
+    transportType?: String[],
+    setTransportType?: ({}: TransportAction) => void
 }
 
-const WidgetContext = createContext<Partial<InitState>>({});
+const WidgetContext = createContext<InitState | undefined>(undefined);
 
 export default WidgetContext;
