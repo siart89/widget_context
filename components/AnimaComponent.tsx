@@ -52,6 +52,7 @@ const AnimaComponent: React.FC<Props> = (props) => {
 const StyledWrapper = styled.section`
     max-width: 600px;
     margin: 0 auto;
+    height: 600px;
 
     .header {
 
@@ -73,32 +74,36 @@ const StyledWrapper = styled.section`
         position: relative;
         overflow-y: hidden;
         height: auto;
+        transform-origin: top;
     }
 
    
-
-         .test-enter {
-            height: 20px;
+    .test {
+        &-enter {
+            transform: scaleY(0);
             opacity: 0;
         }
 
-         .test-enter-active {
+         &-enter-active {
             opacity: 1;
-            height: 200px;
-            transition: opacity 300ms, height 300ms;
+            transform: scaleY(1);
+            transition: all 300ms;
         }
 
-         .test-exit {
+        &-exit {
             opacity: 1;
-            height: 200px;
+            transform: scaleY(1.1);
         }
 
-         .test-exit-active {
-            height: 20px;
+         &-exit-active {
+            transform: scaleY(0);
             opacity: 0;
-            transition: opacity 300ms, height 300ms;
+            transition: all 300ms;
         }
 
+
+    }
+        
 
     .my-class {
 
