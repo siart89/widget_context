@@ -1,45 +1,24 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
-import MainStore from '../store/MainStore';
-import PersonsBtn from '../components/PersonsBtn';
-import Results from '../components/Results';
-import Widjet from '../components/Widget';
-import MapData from '../components/MapData';
-import AnimaComponent from '../components/AnimaComponent';
+import styled from "styled-components";
+import Main from '../components/Main';
 
-const Main: React.FC = () => {
-    const [show, setShow] = useState(false);
-    return (
-        <MainStore>
-            <Link href="/second">
-                <a>
-                    Second
-                </a>
-            </Link>
-            <Widjet
-                isPersons
-                bus
-                bahn
-            />
-            <Results />
 
-            <div>
-                <MapData />
-            </div>
-            <div>
-                <button onClick={() => setShow(!show)}>
-                    Show anima
-                </button>
+const arr = Array.from({ length: 4 }, (_, index) => index);
 
-                <AnimaComponent
-                    isOpen={show}
-                   
-                />
+export default function App() {
+  return (
+    <StyledWrapper>
+      {arr.map((item, index) => {
+        return <Main key={index} />;
+      })}
+    </StyledWrapper>
+  );
+}
 
-            </div>
-        </MainStore>
-
-    )
-};
-
-export default Main;
+const StyledWrapper = styled.main`
+  max-width: 612px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid gray;
+  border-radius: 4px;
+`;
