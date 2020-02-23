@@ -33,7 +33,7 @@ export default function Main() {
       <Header
         height={minHeight}
         onClick={openHandler}
-        isOpen={!showMax}
+        isOpen={showMin}
         className="main__header"
         minHeightCalc={minHeightCalc}
       />
@@ -43,8 +43,12 @@ export default function Main() {
         in={isOpen}
         classNames="anima"
         timeout={300}
+        onExit={() => setShowMin(true)}
         onExited={() => setShowMax(false)}
-        onEnter={() => setShowMax(true)}
+        onEnter={() => {
+          setShowMax(true)
+          setShowMin(false)
+        }}
       >
         <div className="animation-content">
           <MaxiContent
@@ -74,23 +78,28 @@ const StyledWrapper = styled.div<StylesProps>`
 
     &-enter {
       height: 0;
+      opacity: 0;
     }
 
     &-enter-active {
       height: ${props => props.height}px;
+      opacity: 1;
       transition: all 300ms; 
     }
 
     &-enter-done {
       height: ${props => props.height}px;
+      opacity: 1;
     }
 
     &-exit {
       height: ${props => props.height}px;
+      opacity: 1;
     }
 
     &-exit-active {
-      height: ${props => props.minHeight}px;
+      height: 0;
+      opacity: 0;
       transition: all 300ms; 
     }
   }
