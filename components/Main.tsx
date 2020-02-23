@@ -3,13 +3,15 @@ import styled from "styled-components";
 import Header from "./Header";
 import MaxiContent from "./MaxiContent";
 import { CSSTransition } from 'react-transition-group';
+import MiniContent from "./MiniContent";
 
 
 export default function Main() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [height, setHeight] = React.useState(0);
-
-  const [showMin, setShowMin] = React.useState(false);
+  const [showMin, setShowMin] = React.useState(true);
+  const [showMax, setShowMax] = React.useState(false);
+  const [minHeight, setMinHeight] = React.useState(0);
 
   const openHandler = React.useCallback(() => setIsOpen(!isOpen), [isOpen]);
 
@@ -18,20 +20,36 @@ export default function Main() {
     console.log(h)
   }
 
+  const minHeightCalc = (h: number) => {
+    setMinHeight(h);
+    console.log(h)
+  }
+
   return (
-    <StyledWrapper height={height}>
-      <Header onClick={openHandler} isOpen={showMin} className="main__header" />
+    <StyledWrapper
+      height={height}
+      minHeight={minHeight}
+    >
+      <Header
+        height={minHeight}
+        onClick={openHandler}
+        isOpen={!showMax}
+        className="main__header"
+        minHeightCalc={minHeightCalc}
+      />
+
+
       <CSSTransition
         in={isOpen}
         classNames="anima"
-        timeout={200}
-        onExited={() => setShowMin(false)}
-        onEnter={() => setShowMin(true)}
+        timeout={300}
+        onExited={() => setShowMax(false)}
+        onEnter={() => setShowMax(true)}
       >
         <div className="animation-content">
-          <MaxiContent 
-          isOpen={showMin} 
-          calcheight={heightCalc}
+          <MaxiContent
+            isOpen={showMax}
+            calcheight={heightCalc}
           />
         </div>
       </CSSTransition>
@@ -41,7 +59,8 @@ export default function Main() {
 }
 
 type StylesProps = {
-  height: number
+  height: number,
+  minHeight: number
 };
 
 const StyledWrapper = styled.div<StylesProps>`
@@ -71,7 +90,7 @@ const StyledWrapper = styled.div<StylesProps>`
     }
 
     &-exit-active {
-      height: 0;
+      height: ${props => props.minHeight}px;
       transition: all 300ms; 
     }
   }

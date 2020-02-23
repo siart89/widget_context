@@ -6,33 +6,43 @@ import { CSSTransition } from "react-transition-group";
 type Props = {
   className?: string;
   isOpen: boolean;
+  height: number,
+  minHeightCalc: (h: number) =>void,
   onClick: () => void;
 };
 
 const Header: React.FC<Props> = props => {
   return (
-    <StyledWrapper className={props.className}>
+    <StyledWrapper 
+    height={props.height}
+    className={props.className}
+    >
       <div className="header__row">
         <div className="header__title">Lorem.</div>
         <div className="header__text">Lorem, ipsum dolor.</div>
         <span className="header__info header__text">174$</span>
         <div className="header__button" onClick={props.onClick} />
       </div>
-      {/* <CSSTransition
+      <CSSTransition
         in={props.isOpen}
         classNames="mini"
-        unmountOnExit={true}
-        timeout={220}
+        timeout={300}
       >
         <div className="header__row">
-          <MiniContent />
+          <MiniContent
+            calcHeight={props.minHeightCalc}
+          />
         </div>
-      </CSSTransition> */}
+      </CSSTransition>
     </StyledWrapper>
   );
 };
 
-const StyledWrapper = styled.div`
+type StyledProps = {
+  height: number,
+}
+
+const StyledWrapper = styled.div<StyledProps>`
   display: flex;
   flex-direction: column;
   padding: 5px 16px;
@@ -41,24 +51,31 @@ const StyledWrapper = styled.div`
   .mini {
     &-enter {
       opacity: 0;
-      transform: translate3d(0, -20%, 0);
+      height: 0;
+      transform: translateY(-20%)
     }
 
     &-enter-active {
       opacity: 1;
-      transform: translate3d(0, 0, 0);
-      transition: all 300ms;
+      height: ${props => props.height}px;
+      transform: translateY(0);
+      /* transition: all 300ms; */
+      transition: transform 200ms;
     }
 
     &-exit {
       opacity: 1;
-      transform: translate3d(0, 0, 0);
+      height: ${props => props.height}px;
     }
 
     &-exit-active {
       opacity: 0;
-      transform: translate3d(0, -20%, 0);
+      height: 0;
       transition: all 300ms;
+    }
+    &-exit-done {
+      opacity: 0;
+      height: 0;
     }
   }
 

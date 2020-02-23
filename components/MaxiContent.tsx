@@ -55,6 +55,22 @@ const MaxiContent: React.FC<Props> = props => {
             <div className="maxi-content__row">
                 Lorem ipsum dolor sit, amet consectetur adipisicing.
                         </div>
+                        <div className="maxi-content__row">
+                Lorem ipsum dolor sit amet consectetur.
+                        </div>
+            <div className="maxi-content__row">Lorem, ipsum dolor.</div>
+            <div className="maxi-content__row">Lorem ipsum dolor sit amet.</div>
+            <div className="maxi-content__row">
+                Lorem ipsum dolor sit, amet consectetur adipisicing.
+                        </div>
+                        <div className="maxi-content__row">
+                Lorem ipsum dolor sit amet consectetur.
+                        </div>
+            <div className="maxi-content__row">Lorem, ipsum dolor.</div>
+            <div className="maxi-content__row">Lorem ipsum dolor sit amet.</div>
+            <div className="maxi-content__row">
+                Lorem ipsum dolor sit, amet consectetur adipisicing.
+                        </div>
         </StyledWrapper>
     )
 };
