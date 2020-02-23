@@ -60,7 +60,8 @@ const StyledWrapper = styled.div<StyledProps>`
       height: ${props => props.height}px;
       transform: translateY(0);
       /* transition: all 300ms; */
-      transition: transform 200ms;
+      /* transition: transform 100ms; */
+      transition: opacity 100ms;
     }
 
     &-exit {
