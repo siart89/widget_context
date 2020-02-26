@@ -2,23 +2,30 @@ import * as React from "react";
 import styled from "styled-components";
 import MiniContent from "./MiniContent";
 import { CSSTransition } from "react-transition-group";
+import useHeight from "../hooks/useHeight";
 
 type Props = {
   className?: string;
   isOpen: boolean;
   height: number,
-  minHeightCalc: (h: number) =>void,
+  minHeightCalc: (h: number) => void,
   onClick: () => void;
 };
 
 const Header: React.FC<Props> = props => {
+  const myRef = React.useRef(null);
+
+  const { height } = useHeight(myRef);
+
+  console.log('header height ---------->>>>>', height);
   return (
-    <StyledWrapper 
-    height={props.height}
-    className={props.className}
+    <StyledWrapper
+      height={props.height}
+      className={props.className}
+      ref={myRef}
     >
       <div className="header__row">
-        <div className="header__title">Lorem.</div>
+        <div className="header__title">Lorem. {height}</div>
         <div className="header__text">Lorem, ipsum dolor.</div>
         <span className="header__info header__text">174$</span>
         <div className="header__button" onClick={props.onClick} />
@@ -65,11 +72,13 @@ const StyledWrapper = styled.div<StyledProps>`
     }
 
     &-exit {
+      transform: translateY(0);
       opacity: 1;
       height: ${props => props.height}px;
     }
 
     &-exit-active {
+      transform: translateY(-20%);
       opacity: 0;
       height: 0;
       transition: all 300ms;
