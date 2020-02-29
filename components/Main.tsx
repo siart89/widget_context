@@ -1,108 +1,69 @@
-import React from "react";
-import styled from "styled-components";
-import Header from "./Header";
-import MaxiContent from "./MaxiContent";
-import { CSSTransition } from 'react-transition-group';
-import MiniContent from "./MiniContent";
+import React, { useContext, useMemo } from 'react';
+import styled from 'styled-components';
+import { TransportType, LineType } from './mooks';
+import Provider from './Provider';
+import Lines from './Lines';
+import { InfoContext } from '../pages';
 
-
-export default function Main() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [height, setHeight] = React.useState(0);
-  const [showMin, setShowMin] = React.useState(true);
-  const [showMax, setShowMax] = React.useState(false);
-  const [minHeight, setMinHeight] = React.useState(0);
-
-  const openHandler = React.useCallback(() => setIsOpen(!isOpen), [isOpen]);
-
-  const heightCalc = (h: number) => {
-    setHeight(h);
-    console.log(h)
-  }
-
-  const minHeightCalc = (h: number) => {
-    setMinHeight(h);
-    console.log(h)
-  }
-
-  return (
-    <StyledWrapper
-      height={height}
-      minHeight={minHeight}
-    >
-      <Header
-        height={minHeight}
-        onClick={openHandler}
-        isOpen={showMin}
-        className="main__header"
-        minHeightCalc={minHeightCalc}
-      />
-
-
-      <CSSTransition
-        in={isOpen}
-        classNames="anima"
-        timeout={300}
-        onExit={() => setShowMin(true)}
-        onExited={() => setShowMax(false)}
-        onEnter={() => {
-          setShowMax(true)
-          setShowMin(false)
-        }}
-      >
-        <div className="animation-content">
-          <MaxiContent
-            isOpen={showMax}
-            calcheight={heightCalc}
-          />
-        </div>
-      </CSSTransition>
-
-    </StyledWrapper>
-  );
+type Props = {
+    transport: TransportType[],
+    line: LineType[],
 }
 
-type StylesProps = {
-  height: number,
-  minHeight: number
+const Main: React.FC<Props> = (props) => {
+    const {
+        line,
+        transport
+    } = props;
+    const [state] = useContext(InfoContext);
+
+    const lines = useMemo(() => state.line?.map((item) => item.line), [state.line]);
+    return (
+        <StyledWrapper>
+            <div className="provider-box">
+                {
+                    transport.map((item, index) => {
+                        return (
+                            <Provider
+                                key={index}
+                                type={item.type}
+                            />
+                        )
+                    })
+                }
+            </div>
+            <div className="lines-box">
+                {
+                    line.map((item, index) => {
+                        const selected = lines?.includes(item.line) ?? false;
+                        return (
+                            <Lines
+                                key={index}
+                                line={item.line}
+                                selected={selected}
+                                provider={item.provider}
+                            />
+                        )
+                    })
+                }
+            </div>
+        </StyledWrapper>
+    );
 };
 
-const StyledWrapper = styled.div<StylesProps>`
+const StyledWrapper = styled.div`
+    display: flex;
 
-  .animation-content {
-    overflow: hidden;
-    background-color: #fff;
-  }
-
-  .anima {
-
-    &-enter {
-      height: 0;
-      opacity: 0;
+    .provider-box {
+        display: flex;
+        align-items: center;
     }
 
-    &-enter-active {
-      height: ${props => props.height}px;
-      opacity: 1;
-      transition: all 300ms; 
+    .lines-box {
+        display: flex;
+        align-items: center;
+        margin-left: 15px;
     }
-
-    &-enter-done {
-      height: ${props => props.height}px;
-      opacity: 1;
-    }
-
-    &-exit {
-      height: ${props => props.height}px;
-      opacity: 1;
-    }
-
-    &-exit-active {
-      height: 0;
-      opacity: 0;
-      transition: all 300ms; 
-    }
-  }
-
-
 `;
+
+export default Main;
