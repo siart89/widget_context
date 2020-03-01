@@ -17,33 +17,61 @@ const Main: React.FC<Props> = (props) => {
     } = props;
     const [state] = useContext(InfoContext);
 
-    const lines = useMemo(() => state.line?.map((item) => item.line), [state.line]);
     return (
         <StyledWrapper>
             <div className="provider-box">
                 {
                     transport.map((item, index) => {
-                        return (
-                            <Provider
-                                key={index}
-                                type={item.type}
-                            />
-                        )
+                        let selected = state.selectedTransport === item.type;
+                        if (state.selectedTransport === null) {
+                            return (
+                                <Provider
+                                    key={index}
+                                    type={item.type}
+                                    selected={selected}
+                                />
+                            )
+                        };
+                        if ((state.selectedTransport !== null) && state.selectedTransport === item.type) {
+                            return (
+                                <Provider
+                                    key={index}
+                                    type={item.type}
+                                    selected={selected}
+                                />
+                            )
+                        };
+                        return null;
                     })
                 }
             </div>
             <div className="lines-box">
                 {
                     line.map((item, index) => {
-                        const selected = lines?.includes(item.line) ?? false;
-                        return (
-                            <Lines
-                                key={index}
-                                line={item.line}
-                                selected={selected}
-                                provider={item.provider}
-                            />
-                        )
+
+                        const selected = state.line?.includes(item.line) ?? false;
+
+                        if ((state.selectedTransport !== null) && state.selectedTransport === item.provider) {
+                            return (
+                                <Lines
+                                    key={index}
+                                    line={item.line}
+                                    selected={selected}
+                                    provider={item.provider}
+                                />
+                            )
+                        }
+                        if (state.selectedTransport === null) {
+                            return (
+                                <Lines
+                                    key={index}
+                                    line={item.line}
+                                    selected={selected}
+                                    provider={item.provider}
+                                />
+                            )
+                        };
+                        return null;
                     })
                 }
             </div>

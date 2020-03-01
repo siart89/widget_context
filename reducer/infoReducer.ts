@@ -6,7 +6,7 @@ export type Lines = {
 
 export type InitState = {
     selectedTransport: null | Transports,
-    line: null | Lines[],
+    line: null | string[],
 };
 
 export type Actions =
@@ -30,11 +30,9 @@ export const reducer = (state: InitState, action: Actions): InitState => {
         case "set_line":{
             let newState;
             if (state.line !== null) {
-                newState = state.line.concat({line: action.line})
+                newState = state.line.concat(action.line)
             } else {
-                newState = [{
-                    line: action.line
-                }]
+                newState = [action.line]
             }
             return {
                 selectedTransport: action.provider,
@@ -50,7 +48,7 @@ export const reducer = (state: InitState, action: Actions): InitState => {
             }
             return {
                 ...state,
-                line: state.line.filter((item) => item.line !== action.line)
+                line: state.line.filter((item) => item !== action.line)
             };
         default:
             return state;
@@ -59,7 +57,7 @@ export const reducer = (state: InitState, action: Actions): InitState => {
 
 type Options = {
     selectedTransport?:Transports,
-    line?: Lines[],
+    line?: string[],
 }
 
 export const getInitialState = (options: Options): InitState => {
