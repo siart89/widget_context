@@ -1,96 +1,66 @@
 import React, { useState, useRef, useCallback, useEffect, useReducer, createContext } from 'react';
-import styled, {createGlobalStyle, css} from 'styled-components';
-import {useViewportScroll} from 'framer-motion';
+import styled, { createGlobalStyle, css } from 'styled-components';
+import { useViewportScroll } from 'framer-motion';
+import Sticky from '../components/Sticky';
 export const InfoContext = createContext(null);
 
 const arr = Array.from({ length: 4 }, (_, index) => index);
 
 export default function App() {
 
-  const [isFix, setIsFix] = useState(false);
   const [max, setMax] = useState(false);
-
-  useEffect(() => {
-
-    const foo = () => {
-      if (pageYOffset < 58 && isFix) {
-        setIsFix(false)
-      }
-      if (pageYOffset >= 58 && !isFix) {
-        setIsFix(true)
-      }
-      if (max) {
-        setMax(false)
-      }
-    }
-
-    window.addEventListener('scroll',foo) 
-    return () => window.removeEventListener('scroll', foo)
-  }, [isFix, max])
-
 
   return (
     <>
-    <GlobalStyles />
-    <StyledWrapper 
-      isfix={isFix}
-      isMax={max}
-    >
-      <div className="header">
-        Head1er
-        Head1er
-        Hea1der
-        Hea1der
-        Header
-        Header 
+      <GlobalStyles />
+      <StyledWrapper
+        isMax={max}
+      >
+        <div className="header">
+          Head1er
+          Head1er
+          Hea1der
+          Hea1der
+          Header
+          Header
       </div>
-      <div className="sticky__outer">
-      <div className="sticky__first">
-        {max ? 
-          <div className="title title__max">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, sunt!
-          Voluptatum facere totam corrupti accusantium quas minus quis. Libero dolore voluptates fugit!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, sunt!
-          Voluptatum facere totam corrupti accusantium quas minus quis. Libero dolore voluptates fugit!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, sunt!
-          Voluptatum facere totam corrupti accusantium quas minus quis. Libero dolore voluptates fugit!
+        <Sticky
+        top={0}
+        indexZ={15}
+        >
+          {max ?
+            <div className="title title__max">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, sunt!
+              Voluptatum facere totam corrupti accusantium quas minus quis. Libero dolore voluptates fugit!
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, sunt!
+              Voluptatum facere totam corrupti accusantium quas minus quis. Libero dolore voluptates fugit!
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, sunt!
+              Voluptatum facere totam corrupti accusantium quas minus quis. Libero dolore voluptates fugit!
           <button onClick={() => setMax(false)}>
-            CLICK
+                CLICK
           </button>
-        </div> : 
-        <div className="title">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, sunt!
-        Voluptatum facere totam corrupti accusantium quas minus quis. Libero dolore voluptates fugit!
+            </div> :
+            <div className="title">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, sunt!
+              Voluptatum facere totam co1rrupti accusantium quas minus quis. Libero dolore voluptates fugit!
         <button onClick={() => setMax(true)}>
-          CLICK
+                CLICK
         </button>
-      </div>
-      }
-        
-      </div>
-      <div className="sticky__second">
-        <div className="title">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto, sunt!
-          Voluptatum fac1ere totam corrupti accusantium quas minus quis. Libero dolore voluptates fugit!
-        </div>
-      </div>
-      </div>
-      <div className="content">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum!
-     </div>
-      <div className="content">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum!
-     </div>
-      <div className="content">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum!
-     </div>
-      <div className="content">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rerum!
-     </div>
-      <div className="content">
-        Lorem, ipsum dolor s1it amet consectetur adipisicing elit. Rerum!
-     </div>
-    </StyledWrapper>
+            </div>
+          }
+        </Sticky>
+        <Sticky
+          top={40}
+          indexZ={10}
+        >
+<ul className="list"><li>1</li>
+<li>2</li>
+<li>3</li>
+<li>4</li></ul>
+
+          </Sticky>
+
+      </StyledWrapper>
     </>
   );
 }
@@ -106,9 +76,9 @@ const GlobalStyles = createGlobalStyle`
 
 type StylesProps = {
   isFix: boolean
-} 
+}
 
-const StyledWrapper = styled.main<{isFix: boolean, isMax: boolean}>`
+const StyledWrapper = styled.main<{ isFix: boolean, isMax: boolean }>`
   max-width: 612px;
   width: 100%;
   margin: 0 auto;
@@ -116,6 +86,7 @@ const StyledWrapper = styled.main<{isFix: boolean, isMax: boolean}>`
   border-radius: 4px;
   background-color: tomato;
   overflow: hidden;
+  padding-bottom: 1500px;
   .content {
     padding: 150px 15px;
     margin: 0 auto;
@@ -160,5 +131,10 @@ const StyledWrapper = styled.main<{isFix: boolean, isMax: boolean}>`
         /* transform: translateY(73px); */
       `}
     }
+  }
+  .list {
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
   }
 `;
